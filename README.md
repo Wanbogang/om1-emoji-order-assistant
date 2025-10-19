@@ -92,3 +92,15 @@ Add tests if applicable
 Submit a pull request
 License
 This project is open source and available under the MIT License.
+
+## Wallet-connected vs Payment-Processor flows
+
+Project ini mendukung dua pendekatan pembayaran:
+- **Payment-processor (Coinbase Commerce)** — pengguna membayar via gateway pihak ketiga; server menerima webhook konfirmasi.
+- **Wallet-connected (WalletConnect / injected wallet)** — pengguna *connect* dan *sign* transaksi on-chain; server menerima `tx_hash` dan memonitor receipt via RPC (ETH_RPC).
+
+Environment variables penting:
+- `ETH_RPC` — RPC endpoint (contoh: Ganache `http://127.0.0.1:8545`, Infura/Alchemy).
+- `COINBASE_WEBHOOK_SECRET` — secret HMAC untuk verifikasi webhook Coinbase Commerce (jika digunakan).
+
+Untuk testing lokal, disarankan jalankan Ganache dan Flask secara terpisah. Lihat `demo/home_assistant` untuk contoh integrasi Home Assistant.
