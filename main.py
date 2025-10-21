@@ -1,6 +1,30 @@
 from fastapi import FastAPI, HTTPException, Request, BackgroundTasks
 from fastapi.responses import JSONResponse, HTMLResponse
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Smart Assistant Configuration
+HOME_ASSISTANT_URL = os.getenv("HOME_ASSISTANT_URL")
+HOME_ASSISTANT_TOKEN = os.getenv("HOME_ASSISTANT_TOKEN")
+SMART_ASSISTANT_ENABLED = os.getenv("SMART_ASSISTANT_ENABLED", "false").lower() == "true"
 from pydantic import BaseModel
+from pydantic import BaseModel
+from typing import Optional
+
+class VoiceCommandRequest(BaseModel):
+    command: str
+    customer_name: Optional[str] = None
+
+class SmartOrderRequest(BaseModel):
+    emoji_string: str
+    customer_name: Optional[str] = "Customer"
+
+class StatusUpdate(BaseModel):
+    status: str  # "paid", "pending", "failed"
+from src.smart_assistant import SmartAssistantBridge, VoiceCommandProcessor
 from typing import Optional, List, Dict, Any
 import logging
 import os
@@ -306,3 +330,73 @@ if __name__ == "__main__":
         reload=True,
         log_level="info"
     )
+# --- added by helper: wallet-order blueprint import ---
+try:
+    from src.payments.wallet_order import bp as wallet_order_bp
+    app.register_blueprint(wallet_order_bp)
+except Exception as _:
+    # ignore if app not created yet or duplicate
+    pass
+# --- end added by helper ---
+# --- added by helper: internal order status callback route ---
+try:
+    import src.app_routes  # ensures /api/order_status_callback is registered
+except Exception:
+    pass
+# --- end added by helper ---
+
+# Smart Assistant Endpoints
+@app.post("/api/voice-command")
+async def process_voice_command(request: VoiceCommandRequest):
+    """Process voice command dari smart assistant"""
+    try:
+        bot = get_bot()
+        result = bot.process_voice_command(
+            command=request.command,
+            customer_name=request.customer_name
+        )
+        return {"success": True, "data": result}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/smart-order")
+async def create_smart_order(request: SmartOrderRequest):
+    """Create order dengan smart assistant integration"""
+    try:
+        bot = get_bot()
+        result = bot.create_order_with_smart_assistant(
+            emoji_string=request.emoji_string,
+            customer_name=request.customer_name
+        )
+        return {"success": True, "data": result}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.put("/api/order/{order_id}/smart-status")
+async def update_smart_status(order_id: str, status: StatusUpdate):
+    """Update order status dengan smart assistant integration"""
+    try:
+        bot = get_bot()
+        success = bot.update_payment_status_smart_assistant(
+            order_id=order_id,
+            status=status.status
+        )
+        if success:
+            return {"success": True, "message": "Status updated successfully"}
+        else:
+            raise HTTPException(status_code=500, detail="Failed to update status")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/smart-assistant/status")
+async def smart_assistant_status():
+    """Cek status smart assistant connection"""
+    try:
+        bot = get_bot()
+        return {
+            "enabled": bot.smart_assistant.enabled,
+            "connected": bot.smart_assistant.ha_url is not None,
+            "ha_url": bot.smart_assistant.ha_url if bot.smart_assistant.enabled else None
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

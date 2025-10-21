@@ -1,16 +1,16 @@
 import os
 import requests
 from typing import Dict
-from .config import Config
+from ..utils.config import Config
 
 class PaymentHandler:
     def __init__(self):
         self.config = Config()
-        # Mock Coinbase integration untuk demo
+        # Mock Coinbase integration for demo
         self.mock_payments = {}
     
     def create_payment_charge(self, order_data: Dict) -> Dict:
-        """Create Coinbase payment charge (Mock untuk demo)"""
+        """Create Coinbase payment charge (Mock for demo)"""
         try:
             # Mock charge creation
             charge_id = f"mock_charge_{order_data['order_id']}"
@@ -37,7 +37,7 @@ class PaymentHandler:
             }
     
     def verify_payment(self, charge_id: str) -> Dict:
-        """Verify payment status (Mock untuk demo)"""
+        """Verify payment status (Mock for demo)"""
         try:
             if charge_id in self.mock_payments:
                 # Simulate payment completion
