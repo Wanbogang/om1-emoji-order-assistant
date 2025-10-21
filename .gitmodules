@@ -1,0 +1,3 @@
+[submodule "src/static/om1-wallet-multiprovider"]
+	path = src/static/om1-wallet-multiprovider
+	url = https://github.com/Wanbogang/om1-wallet-multiprovider.git

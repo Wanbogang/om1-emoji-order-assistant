@@ -1,122 +1,106 @@
-# OM1 Emoji Order Assistant — Smart Voice Integration
+# Emoji Order Assistant
 
-🎉 **Bug Bounty Submission for OM1 Issue #367**  
-Complete voice-activated emoji ordering system with smart assistant integration.
+A revolutionary food ordering system that allows customers to place orders using emojis! 🍕☕🥐
 
-## ✅ Features Implemented
+## Features
 
-### Core Requirements
-- **Voice Command Processing**: Natural language processing for commands like _“order ☕🍕 for John”_  
-- **Emoji Processing**: Advanced emoji-to-menu-item conversion  
-- **Smart Assistant Integration**: Bridge for Home Assistant with notifications  
-- **Order Management**: Full order lifecycle with status tracking  
-- **Payment Integration**: Wallet-connected payment flow via MetaMask / browser wallet  
-- **REST API**: Built with FastAPI, endpoints for commands, orders & payments  
+- 🎯 **Emoji-based Ordering**: Simply send emojis to order food
+- 💳 **Payment Integration**: Coinbase Commerce integration for crypto payments
+- 📊 **Order Management**: Complete order lifecycle tracking
+- 🤖 **Interactive Demo**: Rich terminal interface for testing
+- 🌐 **REST API**: Full API for integration with other systems
+- 📱 **Web Interface**: Simple HTML interface for web users
 
-### Advanced Features
-- Multi-language support: Indonesian (“order …”) + English commands  
-- AI-powered customer name extraction from voice commands  
-- Real-time notifications for new orders via smart assistant  
-- Order status progression: Pending → Paid → Preparing → Ready → Completed  
-- Comprehensive error handling and input validation  
+## Quick Start
 
-## 📋 Available Menu
+### 1. Install Dependencies
 
-| Emoji | Item             | Price  |
-|-------|------------------|--------|
-| ☕     | Coffee           | $3.50  |
-| ☕☕    | Large Coffee     | $5.00  |
-| 🍕     | Pizza            | $12.00 |
-| 🥗     | Salad            | $8.00  |
-| 🥤     | Smoothie         | $6.00  |
-| 🚀     | Express (+$2.00) | Modifier |
-| 📍     | Delivery (+$3.00)| Modifier |
-| 💪     | Protein Boost (+$2.50) | Modifier |
-
-## 🎤 Voice Commands Examples
-
-#### 🇬🇧 English
-order ☕🥐 for Mike
-make me ☕☕🍰 please
-I want 🍕🥤 delivery
-
-## 🔧 API Endpoints
-
-**Voice Commands**  
-`POST /api/voice-command`  
-Content-Type: `application/json`
-```json
-{
-  "command": "order ☕🍕 for John",
-  "customer_name": "John Doe"
-}
-```
-
-**Emoji Orders**  
-`POST /api/emoji-order`  
-Content-Type: `application/json`
-```json
-{
-  "emoji_string": "☕🥗",
-  "user_id": "Jane"
-}
-```
-
-**Payment Processing**  
-`POST /api/payment/signed`  
-Content-Type: `application/json`
-```json
-{
-  "order_id": "b0521fe8",
-  "txHash": "0x1234abcd…"
-}
-```
-
-**Order Status**  
-`GET /api/orders`
-
----
-
-## 🧪 Quick Start
 ```bash
-git clone https://github.com/Wanbogang/om1-emoji-order-assistant.git
-cd om1-emoji-order-assistant
 pip install -r requirements.txt
-cp .env.example .env   # edit .env with API keys if needed
-./demo/e2e_wallet_demo.sh
-```
+Run the Interactive Demo
+python quick_demo.py
+This will start an interactive terminal session where you can:
 
-Open your browser at `http://localhost:8080/` (requires MetaMask or browser wallet on testnet/local).  
-Connect your wallet → Sign & Send Tx → then check orders:
-```bash
-curl http://localhost:8080/api/orders
-```
+Type emojis to place orders (e.g., ☕🥐 for coffee and croissant)
+View the menu with menu
+See statistics with stats
+Get help with help
+ Start the API Server
+python main.py
+The API will be available at http://localhost:8000
 
----
+Web Interface: http://localhost:8000
+API Documentation: http://localhost:8000/docs
+Available Menu Items
+| Emoji | Item | Price |
+|-------|------|-------|
+| ☕ | Coffee | $3.50 |
+| 🥐 | Croissant | $2.50 |
+| 🥪 | Sandwich | $8.00 |
+| 🍕 | Pizza Slice | $5.50 |
+| 🍔 | Burger | $7.50 |
+| 🥗 | Salad | $6.00 |
+| 🍰 | Cake | $4.50 |
+| 🍪 | Cookie | $2.00 |
+| 🧋 | Bubble Tea | $6.50 |
+| 🥤 | Soda | $2.50 |
+| 🍣 | Sushi Roll | $8.50 |
+| 🍜 | Ramen | $9.00 |
 
-## 🏁 Claim Bounty — OM1 Issue #367
-**Home Assistant used:** Yes — `home_assistant_config.yaml` included  
-**Repo:** https://github.com/Wanbogang/om1-emoji-order-assistant  
-**PR:** https://github.com/Wanbogang/om1-emoji-order-assistant/pull/2  
-**Demo Video:** https://youtu.be/eB4q9EvyHDA  
 
-### Notes:
-- Run: `./demo/e2e_wallet_demo.sh`
-- Use browser wallet (MetaMask) on testnet/local
-- Flow: voice → create order → wallet signature → server records `txHash`
+API Usage Examples
+Create an Order
+curl -X POST "http://localhost:8000/api/order" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "emoji_string": "☕🥐🍕",
+       "customer_name": "John Doe"
+     }'
+Get Order Details
+curl "http://localhost:8000/api/order/{order_id}"
+List All Orders
+curl "http://localhost:8000/api/orders"
+Get Menu
+curl "http://localhost:8000/api/menu"
+Get Statistics
+curl "http://localhost:8000/api/stats"
+Configuration
+Create a .env file for production use:
+COINBASE_COMMERCE_API_KEY=your_api_key_here
+COINBASE_COMMERCE_WEBHOOK_SECRET=your_webhook_secret_here
+Architecture
+The system consists of several key components:
 
-**Artifacts in this PR:**
-- `web-client/` — demo wallet UI  
-- `server.py` — FastAPI demo + `/api/payment/signed` + `/api/orders`  
-- `demo/e2e_wallet_demo.sh`  
-- `home_assistant_config.yaml`  
-- `README.md` — Claim Bounty section updated
+EmojiProcessor: Parses emoji strings and converts them to menu items
+OrderManager: Manages order lifecycle and storage
+PaymentHandler: Handles payment processing with Coinbase Commerce
+EmojiBot: Main integration class that coordinates all components
+FastAPI Server: REST API for web integration
+Demo Mode
+The system runs in demo mode by default, which means:
 
----
+No actual payments are processed
+Mock payment URLs are generated
+All functionality works for testing purposes
+To enable real payments, set up Coinbase Commerce API keys in your environment.
 
-## 📝 License
-MIT License — free for commercial and non-commercial use.
+Contributing
+Fork the repository
+Create a feature branch
+Make your changes
+Add tests if applicable
+Submit a pull request
+License
+This project is open source and available under the MIT License.
 
-## 🤝 Contributing
-Fork the repository → Create feature branch → Make changes → Test thoroughly → Submit pull request
+## Wallet-connected vs Payment-Processor flows
 
+Project ini mendukung dua pendekatan pembayaran:
+- **Payment-processor (Coinbase Commerce)** — pengguna membayar via gateway pihak ketiga; server menerima webhook konfirmasi.
+- **Wallet-connected (WalletConnect / injected wallet)** — pengguna *connect* dan *sign* transaksi on-chain; server menerima `tx_hash` dan memonitor receipt via RPC (ETH_RPC).
+
+Environment variables penting:
+- `ETH_RPC` — RPC endpoint (contoh: Ganache `http://127.0.0.1:8545`, Infura/Alchemy).
+- `COINBASE_WEBHOOK_SECRET` — secret HMAC untuk verifikasi webhook Coinbase Commerce (jika digunakan).
+
+Untuk testing lokal, disarankan jalankan Ganache dan Flask secara terpisah. Lihat `demo/home_assistant` untuk contoh integrasi Home Assistant.
