@@ -40,90 +40,84 @@ order ☕🥐 for Mike
 make me ☕☕🍰 please
 I want 🍕🥤 delivery
 
-
 ## 🔧 API Endpoints
 
 **Voice Commands**  
 `POST /api/voice-command`  
-Content-Type: `application/json`  
+Content-Type: `application/json`
 ```json
 {
   "command": "order ☕🍕 for John",
   "customer_name": "John Doe"
 }
+```
 
-Emoji Orders
-POST /api/emoji-order
-Content-Type: application/json
-
+**Emoji Orders**  
+`POST /api/emoji-order`  
+Content-Type: `application/json`
+```json
 {
   "emoji_string": "☕🥗",
   "user_id": "Jane"
 }
+```
 
-
-Payment Processing
-POST /api/payment/signed
-Content-Type: application/json
-
+**Payment Processing**  
+`POST /api/payment/signed`  
+Content-Type: `application/json`
+```json
 {
   "order_id": "b0521fe8",
   "txHash": "0x1234abcd…"
 }
+```
 
+**Order Status**  
+`GET /api/orders`
 
-Order Status
-GET /api/orders
+---
 
-🧪 Quick Start
+## 🧪 Quick Start
+```bash
 git clone https://github.com/Wanbogang/om1-emoji-order-assistant.git
 cd om1-emoji-order-assistant
 pip install -r requirements.txt
 cp .env.example .env   # edit .env with API keys if needed
 ./demo/e2e_wallet_demo.sh
+```
 
-
-Open your browser at http://localhost:8080/ (requires MetaMask or browser wallet on testnet/local).
+Open your browser at `http://localhost:8080/` (requires MetaMask or browser wallet on testnet/local).  
 Connect your wallet → Sign & Send Tx → then check orders:
-
+```bash
 curl http://localhost:8080/api/orders
+```
 
-🏁 Claim Bounty — OM1 Issue #367
+---
 
-Home Assistant used: Yes — home_assistant_config.yaml included
-Repo: https://github.com/Wanbogang/om1-emoji-order-assistant
+## 🏁 Claim Bounty — OM1 Issue #367
+**Home Assistant used:** Yes — `home_assistant_config.yaml` included  
+**Repo:** https://github.com/Wanbogang/om1-emoji-order-assistant  
+**PR:** https://github.com/Wanbogang/om1-emoji-order-assistant/pull/2  
+**Demo Video:** https://youtu.be/eB4q9EvyHDA  
+**Post Link (Twitter):** `<PASTE_TWEET_URL_HERE>`
 
-PR: https://github.com/Wanbogang/om1-emoji-order-assistant/pull/2
+### Notes:
+- Run: `./demo/e2e_wallet_demo.sh`
+- Use browser wallet (MetaMask) on testnet/local
+- Flow: voice → create order → wallet signature → server records `txHash`
 
-Demo Video: https://youtu.be/eB4q9EvyHDA
+**Artifacts in this PR:**
+- `web-client/` — demo wallet UI  
+- `server.py` — FastAPI demo + `/api/payment/signed` + `/api/orders`  
+- `demo/e2e_wallet_demo.sh`  
+- `home_assistant_config.yaml`  
+- `README.md` — Claim Bounty section updated
 
-Post Link (Twitter): <PASTE_TWEET_URL_HERE>
+---
 
-Notes:
-
-Run: ./demo/e2e_wallet_demo.sh
-
-Use browser wallet (MetaMask) on testnet/local
-
-Flow: voice → create order → wallet signature → server records txHash
-
-Artifacts in this PR:
-
-web-client/ (demo wallet UI)
-
-server.py (FastAPI demo + /api/payment/signed + /api/orders)
-
-demo/e2e_wallet_demo.sh
-
-home_assistant_config.yaml
-
-README.md (Claim Bounty section updated)
-
-📝 License
-
+## 📝 License
 MIT License — free for commercial and non-commercial use.
 
-🤝 Contributing
-
+## 🤝 Contributing
 Fork the repository → Create feature branch → Make changes → Test thoroughly → Submit pull request
 
