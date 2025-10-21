@@ -99,7 +99,6 @@ curl http://localhost:8080/api/orders
 **Repo:** https://github.com/Wanbogang/om1-emoji-order-assistant  
 **PR:** https://github.com/Wanbogang/om1-emoji-order-assistant/pull/2  
 **Demo Video:** https://youtu.be/eB4q9EvyHDA  
-**Post Link (Twitter):** `<PASTE_TWEET_URL_HERE>`
 
 ### Notes:
 - Run: `./demo/e2e_wallet_demo.sh`
