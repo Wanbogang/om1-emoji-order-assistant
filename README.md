@@ -103,4 +103,36 @@ Environment variables penting:
 - `ETH_RPC` — RPC endpoint (contoh: Ganache `http://127.0.0.1:8545`, Infura/Alchemy).
 - `COINBASE_WEBHOOK_SECRET` — secret HMAC untuk verifikasi webhook Coinbase Commerce (jika digunakan).
 
-Untuk testing lokal, disarankan jalankan Ganache dan Flask secara terpisah. Lihat `demo/home_assistant` untuk contoh integrasi Home Assistant.
+- `ETH_RPC` — RPC endpoint (contoh: Ganache `http://127.0.0.1:8545`, Infura/Alchemy).
+- `COINBASE_WEBHOOK_SECRET` — secret HMAC untuk verifikasi webhook Coinbase Commerce (jika digunakan).
+
+📞 Contact: @Wanbogang for support and customization
+
+## 🏁 Claim bounty — OM1 Issue #367 (submission checklist)
+
+**Home Assistant used:** Yes — `home_assistant_config.yaml` included.
+
+**Post Link:** <PASTE_TWITTER_URL_HERE>
+
+**Demo Video:** <PASTE_VIDEO_URL_HERE>
+
+**Notes / How to reproduce (quick):**
+1. Copy `.env.example` → `.env` and set keys (if needed).
+2. Start demo server:
+   ```bash
+   ./demo/e2e_wallet_demo.sh
+Open browser: http://localhost:8080/ (MetaMask required; use testnet/local chain).
+
+Connect wallet → Sign & Send Tx → server will record order_id → verify:
+curl http://localhost:8080/api/orders
+Artifacts included in this PR:
+
+web-client/ — simple wallet demo (connect & sign tx).
+
+server.py — FastAPI demo + /api/payment/signed and /api/orders.
+
+demo/e2e_wallet_demo.sh — start script + instructions.
+
+home_assistant_config.yaml — example HA automation.
+
+README.md — this checklist & reproduction steps.
