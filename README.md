@@ -112,9 +112,9 @@ Environment variables penting:
 
 **Home Assistant used:** Yes — `home_assistant_config.yaml` included.
 
-**Post Link:** <PASTE_TWITTER_URL_HERE>
+**Post Link:** https://x.com/berkah_nikki/status/1980786927914873005
 
-**Demo Video:** <PASTE_VIDEO_URL_HERE>
+**Demo Video:** https://youtu.be/eB4q9EvyHDA
 
 **Notes / How to reproduce (quick):**
 1. Copy `.env.example` → `.env` and set keys (if needed).
