@@ -17,7 +17,9 @@ A revolutionary food ordering system that allows customers to place orders using
 
 ```bash
 pip install -r requirements.txt
+
 ### 2.Run the Interactive Demo
+
 python quick_demo.py
 This will start an interactive terminal session where you can:
 
@@ -25,7 +27,9 @@ Type emojis to place orders (e.g., ☕🥐 for coffee and croissant)
 View the menu with menu
 See statistics with stats
 Get help with help
+
 ### 3.Start the API Server
+
 python main.py
 The API will be available at http://localhost:8000
 
