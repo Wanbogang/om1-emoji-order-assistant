@@ -17,7 +17,7 @@ A revolutionary food ordering system that allows customers to place orders using
 
 ```bash
 pip install -r requirements.txt
-Run the Interactive Demo
+### 2.Run the Interactive Demo
 python quick_demo.py
 This will start an interactive terminal session where you can:
 
@@ -25,7 +25,7 @@ Type emojis to place orders (e.g., ☕🥐 for coffee and croissant)
 View the menu with menu
 See statistics with stats
 Get help with help
- Start the API Server
+### 3.Start the API Server
 python main.py
 The API will be available at http://localhost:8000
 
@@ -48,7 +48,7 @@ Available Menu Items
 | 🍜 | Ramen | $9.00 |
 
 
-API Usage Examples
+## API Usage Examples
 Create an Order
 curl -X POST "http://localhost:8000/api/order" \
      -H "Content-Type: application/json" \
@@ -64,11 +64,13 @@ Get Menu
 curl "http://localhost:8000/api/menu"
 Get Statistics
 curl "http://localhost:8000/api/stats"
-Configuration
+
+## Configuration
 Create a .env file for production use:
 COINBASE_COMMERCE_API_KEY=your_api_key_here
 COINBASE_COMMERCE_WEBHOOK_SECRET=your_webhook_secret_here
-Architecture
+
+## Architecture
 The system consists of several key components:
 
 EmojiProcessor: Parses emoji strings and converts them to menu items
@@ -95,16 +97,13 @@ This project is open source and available under the MIT License.
 
 ## Wallet-connected vs Payment-Processor flows
 
-Project ini mendukung dua pendekatan pembayaran:
-- **Payment-processor (Coinbase Commerce)** — pengguna membayar via gateway pihak ketiga; server menerima webhook konfirmasi.
-- **Wallet-connected (WalletConnect / injected wallet)** — pengguna *connect* dan *sign* transaksi on-chain; server menerima `tx_hash` dan memonitor receipt via RPC (ETH_RPC).
+This project supports two payment approaches:
+- **Payment-processor (Coinbase Commerce)** — users pay via third-party gateway; server receives webhook confirmation.
+- **Wallet-connected (WalletConnect / injected wallet)** — users *connect* and *sign* on-chain transactions; server receives `tx_hash` and monitors receipt via RPC (ETH_RPC).
 
-Environment variables penting:
-- `ETH_RPC` — RPC endpoint (contoh: Ganache `http://127.0.0.1:8545`, Infura/Alchemy).
-- `COINBASE_WEBHOOK_SECRET` — secret HMAC untuk verifikasi webhook Coinbase Commerce (jika digunakan).
-
-- `ETH_RPC` — RPC endpoint (contoh: Ganache `http://127.0.0.1:8545`, Infura/Alchemy).
-- `COINBASE_WEBHOOK_SECRET` — secret HMAC untuk verifikasi webhook Coinbase Commerce (jika digunakan).
+Important Environment Variables:
+- `ETH_RPC` — RPC endpoint (e.g., Ganache `http://127.0.0.1:8545`, Infura/Alchemy).
+- `COINBASE_WEBHOOK_SECRET` — HMAC secret for Coinbase Commerce webhook verification (if used).
 
 📞 Contact: @Wanbogang for support and customization
 
