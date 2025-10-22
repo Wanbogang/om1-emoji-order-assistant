@@ -17,10 +17,13 @@ A revolutionary food ordering system that allows customers to place orders using
 
 ```bash
 pip install -r requirements.txt
+```
 
 ### 2. Run the Interactive Demo
 
+```bash
 python quick_demo.py
+```
 This will start an interactive terminal session where you can:
 
 Type emojis to place orders (e.g., ☕🥐 for coffee and croissant)
@@ -30,12 +33,16 @@ Get help with help
 
 ### 3. Start the API Server
 
+```bash
 python main.py
+```
 The API will be available at http://localhost:8000
 
 Web Interface: http://localhost:8000
 API Documentation: http://localhost:8000/docs
-Available Menu Items
+
+## Available Menu Items
+
 | Emoji | Item | Price |
 |-------|------|-------|
 | ☕ | Coffee | $3.50 |
@@ -53,50 +60,80 @@ Available Menu Items
 
 
 ## API Usage Examples
-Create an Order
+
+### Create an Order
+
+```bash
 curl -X POST "http://localhost:8000/api/order" \
      -H "Content-Type: application/json" \
      -d '{
        "emoji_string": "☕🥐🍕",
        "customer_name": "John Doe"
      }'
-Get Order Details
+```
+### Get Order Details
+
+```bash
 curl "http://localhost:8000/api/order/{order_id}"
-List All Orders
+```
+
+### List All Orders
+
+```bash
 curl "http://localhost:8000/api/orders"
-Get Menu
+```
+
+### Get Menu
+
+```bash
 curl "http://localhost:8000/api/menu"
-Get Statistics
+```
+
+### Get Statistics
+
+```bash
 curl "http://localhost:8000/api/stats"
+```
 
 ## Configuration
+
 Create a .env file for production use:
+
+```bash
 COINBASE_COMMERCE_API_KEY=your_api_key_here
 COINBASE_COMMERCE_WEBHOOK_SECRET=your_webhook_secret_here
+```
 
 ## Architecture
+
 The system consists of several key components:
 
-EmojiProcessor: Parses emoji strings and converts them to menu items
-OrderManager: Manages order lifecycle and storage
-PaymentHandler: Handles payment processing with Coinbase Commerce
-EmojiBot: Main integration class that coordinates all components
-FastAPI Server: REST API for web integration
-Demo Mode
+**EmojiProcessor**: Parses emoji strings and converts them to menu items
+**OrderManager**: Manages order lifecycle and storage
+**PaymentHandler**: Handles payment processing with Coinbase Commerce
+**EmojiBot**: Main integration class that coordinates all components
+**FastAPI Server**: REST API for web integration
+
+## Demo Mode
+
 The system runs in demo mode by default, which means:
 
-No actual payments are processed
-Mock payment URLs are generated
-All functionality works for testing purposes
+- No actual payments are processed
+- Mock payment URLs are generated
+- All functionality works for testing purposes
+
 To enable real payments, set up Coinbase Commerce API keys in your environment.
 
-Contributing
-Fork the repository
-Create a feature branch
-Make your changes
-Add tests if applicable
-Submit a pull request
-License
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## License
+
 This project is open source and available under the MIT License.
 
 ## Wallet-connected vs Payment-Processor flows
@@ -124,18 +161,21 @@ Important Environment Variables:
 2. Start demo server:
    ```bash
    ./demo/e2e_wallet_demo.sh
-Open browser: http://localhost:8080/ (MetaMask required; use testnet/local chain).
+   ```
+3. Open browser: http://localhost:8080/ (MetaMask required; use testnet/local chain).
+4. Connect wallet → Sign & Send Tx → server will record order_id → verify:
+   ```bash
+   curl http://localhost:8080/api/orders
+   ```
+   
+**Artifacts included in this PR:**
 
-Connect wallet → Sign & Send Tx → server will record order_id → verify:
-curl http://localhost:8080/api/orders
-Artifacts included in this PR:
+`web-client/` — simple wallet demo (connect & sign tx).
 
-web-client/ — simple wallet demo (connect & sign tx).
+`server.py` — FastAPI demo + /api/payment/signed and /api/orders.
 
-server.py — FastAPI demo + /api/payment/signed and /api/orders.
+`demo/e2e_wallet_demo.sh` — start script + instructions.
 
-demo/e2e_wallet_demo.sh — start script + instructions.
+`home_assistant_config.yaml` — example HA automation.
 
-home_assistant_config.yaml — example HA automation.
-
-README.md — this checklist & reproduction steps.
+`README.md` — this checklist & reproduction steps.
